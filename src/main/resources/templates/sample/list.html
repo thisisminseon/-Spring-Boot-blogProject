@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Common Head -->
+    <th:block th:replace="~{sample/fragment/layout :: head(title='리스트 - MyApp')}"></th:block>
+</head>
+
+<body>
+    <!-- 공통 헤더 -->
+    <div th:replace="~{sample/fragment/layout :: header}"></div>
+    
+    <main>
+        <div class="card">
+            <h2>👥 사용자 목록</h2>
+            <p style="color: #777;">
+                총 <strong th:text="${totalCount}">0</strong>명의 사용자가 등록되어 있습니다.
+            </p>
+        </div>
+        
+        <!-- 사용자 테이블 -->
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>나이</th>
+                    <th>이메일</th>
+                    <th>역할</th>
+                    <th>상태</th>
+                    <th>작업</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--
+                    th:each="user, stat : ${users}"
+                    - users 리스트를 반복
+                    - user: 현재 아이템
+                    - stat: 반복 상태 (index, count, first, last 등)
+                -->
+                <tr th:each="user, stat : ${users}">
+                    <!-- stat.count: 1부터 시작하는 순번 -->
+                    <td th:text="${stat.count}">1</td>
+                    
+                    <td th:text="${user.id}">1</td>
+                    
+                    <td>
+                        <strong th:text="${user.name}">이름</strong>
+                    </td>
+                    
+                    <td th:text="${user.age}">0</td>
+                    
+                    <td th:text="${user.email}">email@example.com</td>
+                    
+                    <!-- 역할별 배지 표시 (th:switch 사용) -->
+                    <td>
+                        <span th:switch="${user.role}">
+                            <span th:case="'ADMIN'" class="badge badge-admin">관리자</span>
+                            <span th:case="'USER'" class="badge badge-user">일반</span>
+                            <span th:case="'GUEST'" class="badge badge-guest">게스트</span>
+                        </span>
+                    </td>
+                    
+                    <!-- 활성화 상태 표시 (삼항 연산자 사용) -->
+                    <td>
+                        <span th:class="${user.active} ? 'badge badge-active' : 'badge badge-inactive'"
+                              th:text="${user.active} ? '활성' : '비활성'">
+                            상태
+                        </span>
+                    </td>
+                    
+                    <!-- 상세보기 링크 (경로 변수 사용) -->
+                    <td>
+                        <a th:href="@{/sample/{id}(id=${user.id})}" class="btn" style="padding: 0.3rem 1rem;">
+                            상세보기
+                        </a>
+                    </td>
+                </tr>
+                
+                <!--
+                    th:if="${#lists.isEmpty(users)}"
+                    - users 리스트가 비어있을 때만 표시
+                -->
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="8" style="text-align: center; color: #999;">
+                        등록된 사용자가 없습니다.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- 등록 버튼 -->
+        <div style="text-align: center; margin-top: 2rem;">
+            <a th:href="@{/register}" class="btn" style="font-size: 1.1rem; padding: 0.8rem 2rem;">
+                ➕ 새 사용자 등록
+            </a>
+        </div>
+    </main>
+    
+    <!-- 공통 푸터 -->
+    <div th:replace="~{sample/fragment/layout :: footer}"></div>
+    
+    <!-- 공통 스크립트 -->
+    <th:block th:replace="~{sample/fragment/layout :: scripts}"></th:block>
+    
+    <script>
+        console.log('사용자 목록 페이지');
+    </script>
+</body>
+</html>

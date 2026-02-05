@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Common Header -->
+<th:block th:replace="~{sample/fragment/layout :: common-head}"></th:block>
+<title>회사소개 - MyWebsite</title>
+</head>
+<body>
+	<!-- Reuse Header -->
+	<div th:replace="~{sample/fragment/header :: header}"></div>
+	<!-- Insert Body -->
+	<main class="content">
+		<h1>회사소개</h1>
+		<p>저희는 혁신적인 기업입니다.</p>
+		<p>우리의 비전은</p>
+		<p>두쫀쿠🧆 로 달콤한 세상을 만드는 것 입니다</p>
+		<p>당뇨병 개발자들로 구성되어 있습니다</p>
+	</main>
+	<!-- Reuse Footer -->
+	<th:block th:replace="~{sample/fragment/footer :: footer}"></th:block>
+	<!-- Common Script -->
+	<th:block th:replace="~{sample/fragment/layout :: common-scripts}"></th:block>
+</body>
+</html>

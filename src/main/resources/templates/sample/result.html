@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{sample/fragment/layout :: head}"></th:block>
+    
+    <style>
+        .success-message {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .success-message h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .user-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="~{sample/fragment/layout :: header}"></div>
+    
+    <main>
+        <!-- 성공 메시지 -->
+        <div class="success-message">
+            <div style="font-size: 5rem; margin-bottom: 1rem;">✅</div>
+            <h2>등록 완료!</h2>
+            <p style="font-size: 1.2rem;">
+                <strong th:text="${user.name}">사용자</strong>님의 계정이 성공적으로 등록되었습니다.
+            </p>
+        </div>
+        
+        <!-- 등록된 정보 확인 -->
+        <div class="card user-info">
+            <h3 style="margin-bottom: 1.5rem; color: #667eea;">📋 등록 정보</h3>
+            
+            <!--
+                th:object="${user}"
+                - user 객체 선택
+                - *{필드명}으로 필드 접근
+            -->
+            <table class="detail-table" th:object="${user}">
+                <tr>
+                    <th style="width: 30%; text-align: right; padding-right: 2rem;">ID:</th>
+                    <td th:text="*{id}">1</td>
+                </tr>
+                <tr>
+                    <th style="width: 30%; text-align: right; padding-right: 2rem;">이름:</th>
+                    <td><strong th:text="*{name}">이름</strong></td>
+                </tr>
+                <tr>
+                    <th style="width: 30%; text-align: right; padding-right: 2rem;">나이:</th>
+                    <td th:text="*{age} + '세'">0세</td>
+                </tr>
+                <tr>
+                    <th style="width: 30%; text-align: right; padding-right: 2rem;">이메일:</th>
+                    <td th:text="*{email}">email</td>
+                </tr>
+                <tr>
+                    <th style="width: 30%; text-align: right; padding-right: 2rem;">역할:</th>
+                    <td>
+                        <span th:switch="*{role}">
+                            <span th:case="'ADMIN'" class="badge badge-admin">관리자</span>
+                            <span th:case="'USER'" class="badge badge-user">일반 사용자</span>
+                            <span th:case="'GUEST'" class="badge badge-guest">게스트</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width: 30%; text-align: right; padding-right: 2rem;">상태:</th>
+                    <td>
+                        <span th:class="*{active} ? 'badge badge-active' : 'badge badge-inactive'"
+                              th:text="*{active} ? '활성' : '비활성'">
+                            상태
+                        </span>
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- 버튼 그룹 -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <a th:href="@{/sample/register}" class="btn btn-secondary">추가 등록</a>
+                <a th:href="@{/sample/users}" class="btn">사용자 목록</a>
+                <a th:href="@{/}" class="btn" style="background-color: #27ae60;">홈으로</a>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{sample/fragment/layout :: footer}"></div>
+    
+    <th:block th:replace="~{sample/fragment/layout :: scripts}"></th:block>
+    
+    <script>
+        // 축하 효과
+        console.log('🎉 등록 완료!');
+        
+        // 3초 후 자동으로 사용자 목록으로 이동 (선택사항)
+        // setTimeout(function() {
+        //     window.location.href = '/sample/users';
+        // }, 3000);
+    </script>
+</body>
+</html>

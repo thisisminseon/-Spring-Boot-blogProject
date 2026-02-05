@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- 
+        th:fragment="footer"
+        - 푸터를 조각으로 정의
+    -->
+    <footer th:fragment="footer" style="background-color: #f0f0f0; padding: 2rem; margin-top: 3rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            
+            <!-- 푸터 상단: 링크들 -->
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                
+                <!-- 회사 정보 -->
+                <div>
+                    <h3 style="margin-top: 0;">MyWebsite</h3>
+                    <p>혁신적인 서비스를 제공합니다</p>
+                </div>
+                
+                <!-- 빠른 링크 -->
+                <div>
+                    <h4>빠른 링크</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a th:href="@{/about}">회사 소개</a></li>
+                        <li><a th:href="@{/products}">상품</a></li>
+                        <li><a th:href="@{/support}">고객지원</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 고객센터 -->
+                <div>
+                    <h4>고객센터</h4>
+                    <p>전화: 1588-0000</p>
+                    <p>이메일: support@mywebsite.com</p>
+                </div>
+                
+                <!-- SNS -->
+                <div>
+                    <h4>소셜 미디어</h4>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="text-decoration: none;">Facebook</a>
+                        <a href="#" style="text-decoration: none;">X</a>
+                        <a href="#" style="text-decoration: none;">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 구분선 -->
+            <hr style="border: 0; border-top: 1px solid #ccc;">
+            
+            <!-- 푸터 하단: 저작권 -->
+            <div style="text-align: center; color: #666;">
+                <!-- 
+                    #dates.year(#dates.createNow())
+                    - Thymeleaf의 날짜 유틸리티
+                    - 현재 연도 자동으로 표시
+                -->
+                <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> MyWebsite. All rights reserved.</p>
+                <p>
+                    <a th:href="@{/terms}" style="color: #666; margin: 0 1rem;">이용약관</a>
+                    <a th:href="@{/privacy}" style="color: #666; margin: 0 1rem;">개인정보처리방침</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

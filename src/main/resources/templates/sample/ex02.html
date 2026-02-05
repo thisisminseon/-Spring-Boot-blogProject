@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<!-- thymeleaf 엔진 선언 -->
+
+<head>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>ex02</h1>
+	<p>
+		viewDto 출력 : <br> 
+		name : <span th:text="${viewDto.name}"></span><br>
+		age : <span th:text="${viewDto.age}"></span>
+		
+		<!-- 
+		thymeleaf 명령어는 태그 다음에 코딩한다
+		ViewDto.name 변수에 저장된 값으로 text 형식으로 출력
+		<span></span>태그 사이의 값이 출력된다
+		-->
+		
+	</p>
+	<p>viewDto 속성, name 변수에 저장 된 값을 출력하시오.</p>
+	<p>th : thymeleaf를 사용하는 방법</p>
+
+</body>
+</html>

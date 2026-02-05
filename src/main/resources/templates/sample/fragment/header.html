@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- 
+        th:fragment="header"
+        - 헤더 전체를 하나의 조각으로 정의
+    -->
+    <header th:fragment="header" style="background-color: #333; color: white; padding: 1rem;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            
+            <!-- 로고 -->
+            <div>
+                <h1 style="margin: 0;">
+                    <a th:href="@{/}" style="color: white; text-decoration: none;">
+                        MyWebsite
+                    </a>
+                </h1>
+            </div>
+            
+            <!-- 네비게이션 메뉴 -->
+            <nav>
+                <ul style="list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0;">
+                    <li><a th:href="@{/}" style="color: white; text-decoration: none;">홈</a></li>
+                    <li><a th:href="@{/about}" style="color: white; text-decoration: none;">소개</a></li>
+                    <li><a th:href="@{/products}" style="color: white; text-decoration: none;">상품</a></li>
+                    <li><a th:href="@{/contact}" style="color: white; text-decoration: none;">연락처</a></li>
+                </ul>
+            </nav>
+            
+            <!-- 
+                th:fragment="user-menu"
+                - 헤더 안에 작은 조각 하나 더 정의 가능
+                - 로그인 상태에 따라 다르게 보여줄 때 유용
+            -->
+            <div th:fragment="user-menu">
+                <!-- 로그인 안 했을 때 -->
+                <div th:if="${session.user == null}">
+                    <a th:href="@{/login}" style="color: white; text-decoration: none; margin-right: 1rem;">로그인</a>
+                    <a th:href="@{/signup}" style="color: white; text-decoration: none;">회원가입</a>
+                </div>
+                
+                <!-- 로그인 했을 때 -->
+                <div th:if="${session.user != null}">
+                    <span style="margin-right: 1rem;" th:text="${session.user.name} + '님'">사용자님</span>
+                    <a th:href="@{/logout}" style="color: white; text-decoration: none;">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

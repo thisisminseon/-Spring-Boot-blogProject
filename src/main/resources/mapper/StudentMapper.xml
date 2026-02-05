@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- namespace : 어떤 mapper 인터페이스와 연결할지를 결정 -->
+
+<mapper namespace="com.blog.mapper.StudentMapper">
+
+	<!-- id : Mapper 인터페이스의 메서드 이름과 정확히 일치해야 함 -->
+
+	<insert id="insertStudent"
+		parameterType="com.blog.domain.Student"
+		useGeneratedKeys="true"
+		keyProperty="id"> <!-- student dto 안에 있는 id임 -->
+		insert into student (name, age, major)
+		values (#{name}, #{age}, #{major})
+	</insert>
+
+	<select id="selectAllStudents"
+		resultType="com.blog.domain.Student">
+		select * from student order by id asc
+	</select>
+
+	<select id="selectById"
+		parameterType="int"
+		resultType="com.blog.domain.Student">
+		select * from student where id = #{id}
+	</select>
+	
+	<update id="updateStudent"
+			parameterType="com.blog.domain.Student">
+			update student set name=#{name},age=#{age},major=#{major} where id=#{id}
+	</update>
+	
+	<delete id="deleteStudent"
+			parameterType="int">
+			delete from student where id=#{id}
+	</delete>
+
+</mapper>

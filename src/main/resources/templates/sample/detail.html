@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{sample/fragment/layout :: head(title='사용자 상세 - MyApp')}"></th:block>
+    
+    <style>
+        .detail-table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .detail-table th {
+            background-color: #f8f9fa;
+            color: #333;
+            width: 30%;
+            text-align: right;
+            padding-right: 2rem;
+        }
+        
+        .detail-table td {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="~{sample/fragment/layout :: header}"></div>
+    
+    <main>
+        <div class="card">
+            <h2>👤 사용자 상세 정보</h2>
+            
+            <!--
+                th:object="${user}"
+                - user 객체를 선택하면 *{필드명}으로 접근 가능
+            -->
+            <table class="detail-table" th:object="${user}">
+                <tr>
+                    <th>ID:</th>
+                    <td th:text="*{id}">1</td>
+                </tr>
+                <tr>
+                    <th>이름:</th>
+                    <td>
+                        <strong th:text="*{name}" style="font-size: 1.2rem;">이름</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <th>나이:</th>
+                    <td th:text="*{age} + '세'">0세</td>
+                </tr>
+                <tr>
+                    <th>이메일:</th>
+                    <td>
+                        <a th:href="'mailto:' + *{email}" th:text="*{email}">
+                            email@example.com
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>역할:</th>
+                    <td>
+                        <span th:switch="*{role}">
+                            <span th:case="'ADMIN'" class="badge badge-admin">관리자</span>
+                            <span th:case="'USER'" class="badge badge-user">일반 사용자</span>
+                            <span th:case="'GUEST'" class="badge badge-guest">게스트</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>상태:</th>
+                    <td>
+                        <span th:class="*{active} ? 'badge badge-active' : 'badge badge-inactive'"
+                              th:text="*{active} ? '활성' : '비활성'">
+                            상태
+                        </span>
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- 버튼 그룹 -->
+			<div style="text-align: center; margin-top: 2rem;">
+				<a th:href="@{/sample/users}" class="btn btn-secondary">← 목록으로</a> 
+				<a th:href="@{/sample/users/{id}/edit(id=${user.id})}" class="btn">수정</a>
+				<button class="btn" style="background-color: #e74c3c;"
+					onclick="deleteUser()">삭제</button>
+			</div>
+		</div>
+    </main>
+    
+    <div th:replace="~{sample/fragment/layout :: footer}"></div>
+    
+    <th:block th:replace="~{sample/fragment/layout :: scripts}"></th:block>
+
+	<script th:inline="javascript">
+	
+		// Thymeleaf 변수를 JavaScript에서 사용
+		var userId = /*[[${user.id}]]*/ 0;
+		var userName = /*[[${user.name} ?: 'Unknown']]*/ 'Unknown';
+		function deleteUser() {
+			if (confirm(userName + ' 사용자를 정말 삭제하시겠습니까?')) {
+				alert('삭제 기능은 아직 구현되지 않았습니다.');
+				// 실제로는 DELETE 요청 전송
+			}
+		}
+
+		console.log('사용자 ID:', userId);
+		console.log('사용자 이름:', userName);
+		/*]]>*/
+	</script>
+</body>
+</html>

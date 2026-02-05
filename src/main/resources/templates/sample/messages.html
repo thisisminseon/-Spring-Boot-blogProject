@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>맛사쥐</title>
+</head>
+<body>
+<!-- 메시지 표현식 -->
+	<p th:text="#{greeting}"></p>
+	<p th:text="#{welcome.message(${user.name})}"></p>
+</body>
+</html>

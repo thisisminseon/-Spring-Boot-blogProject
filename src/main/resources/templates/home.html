@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--
+        th:replace="~{fragments/layout :: head('홈 - MyApp')}"
+        - layout.html의 head 조각을 가져옴
+        - 파라미터로 '홈 - MyApp' 제목 전달
+    -->
+    <th:block th:replace="~{sample/fragment/layout :: head}"></th:block>
+    
+    <!-- 페이지별 추가 CSS -->
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+        th:replace="~{fragments/layout :: header}"
+        - layout.html의 header 조각을 가져와서 현재 태그를 대체
+    -->
+    <div th:replace="~{sample/fragment/layout :: header}"></div>
+    
+    <main>
+        <!-- Hero 섹션 -->
+        <div class="hero">
+            <h1>🎉 환영합니다!</h1>
+            <p>사용자 관리 시스템에 오신 것을 환영합니다</p>
+            <a th:href="@{/register}" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                지금 시작하기 →
+            </a>
+        </div>
+        
+        <!-- 기능 소개 -->
+        <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">주요 기능</h2>
+        
+        <div class="features">
+            <!-- 기능 1: 사용자 관리 -->
+            <div class="feature-card">
+                <div class="icon">👥</div>
+                <h3>사용자 관리</h3>
+                <p>사용자 목록을 확인하고 상세 정보를 조회할 수 있습니다.</p>
+                <a th:href="@{/users}" class="btn">사용자 보기</a>
+            </div>
+            
+            <!-- 기능 2: 빠른 등록 -->
+            <div class="feature-card">
+                <div class="icon">✏️</div>
+                <h3>빠른 등록</h3>
+                <p>간단한 폼으로 새로운 사용자를 빠르게 등록할 수 있습니다.</p>
+                <a th:href="@{/register}" class="btn">등록하기</a>
+            </div>
+            
+            <!-- 기능 3: 역할 관리 -->
+            <div class="feature-card">
+                <div class="icon">🔐</div>
+                <h3>역할 관리</h3>
+                <p>관리자, 사용자, 게스트 등 다양한 역할을 관리합니다.</p>
+                <a href="#" class="btn btn-secondary">자세히 보기</a>
+            </div>
+        </div>
+        
+        <!-- 통계 정보 -->
+        <div class="card" style="margin-top: 3rem;">
+            <h2>📊 시스템 통계</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 1rem;">
+                <div style="text-align: center;">
+                    <h3 style="color: #667eea; font-size: 2.5rem;">150+</h3>
+                    <p style="color: #777;">전체 사용자</p>
+                </div>
+                <div style="text-align: center;">
+                    <h3 style="color: #27ae60; font-size: 2.5rem;">85%</h3>
+                    <p style="color: #777;">활성 사용자</p>
+                </div>
+                <div style="text-align: center;">
+                    <h3 style="color: #e74c3c; font-size: 2.5rem;">12</h3>
+                    <p style="color: #777;">관리자</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!--
+        th:replace="~{fragments/layout :: footer}"
+        - layout.html의 footer 조각을 가져옴
+    -->
+    <div th:replace="~{sample/fragment/layout :: footer}"></div>
+    
+    <!--
+        th:replace="~{sample/fragment/layout :: scripts}"
+        - layout.html의 공통 스크립트를 가져옴
+    -->
+    <th:block th:replace="~{sample/fragment/layout :: scripts}"></th:block>
+    
+    <!-- 페이지별 추가 스크립트 -->
+    <script>
+        console.log('홈 페이지 로드됨!');
+    </script>
+</body>
+</html>

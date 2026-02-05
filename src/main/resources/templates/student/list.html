@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생 관리 시스템</title>
+		 <style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: '함초롬돋움';
+		}
+		
+		body {
+			background-color: #f5f5f5;
+			padding: 20px;
+		}
+		
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			background-color: white;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		}
+		
+		h1 {
+		    text-align: center;
+		    margin-bottom: 30px;
+			background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+		    background-size: 400% 400%;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			animation: rainbowGlow 1s linear infinite;
+		}
+		
+		@keyframes rainbowGlow {
+			0% { background-position: 0% 50%; }
+			50% { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
+		}
+		
+		/* 폼 영역 스타일 */
+		.form-section {
+			background-color: #f9f9f9;
+			padding: 20px;
+			border-radius: 8px;
+			margin-bottom: 30px;
+		}
+		
+		.form-section h2 {
+			color: #CD4275;
+			margin-bottom: 15px;
+			font-size: 20px;
+		}
+		
+		.form-group {
+			margin-bottom: 15px;
+		}
+		
+		label {
+			display: block;
+			margin-bottom: 5px;
+			color: #555;
+			font-weight: bold;
+		}
+		
+		input[type="text"], input[type="number"] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			font-size: 14px;
+		}
+		
+		input[type="text"]:focus, input[type="number"]:focus {
+			outline: none;
+			border-color: #CD4275;
+		}
+		
+		/* 버튼 스타일 */
+		button {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: bold;
+			margin-right: 10px;
+			transition: all 0.3s;
+		}
+		
+		.btn-add { background-color: #CD4275; color: white; }
+		.btn-add:hover { background-color: #BE2457	; }
+		
+		.btn-search { background-color: #2196F3; color: white; }
+		.btn-search:hover { background-color: #0b7dda; }
+		
+		.btn-update { background-color: #ff9800; color: white; padding: 5px 10px; font-size: 12px; }
+		.btn-update:hover { background-color: #e68900; }
+		
+		.btn-delete { background-color: #f44336; color: white; padding: 5px 10px; font-size: 12px; }
+		.btn-delete:hover { background-color: #da190b; }
+		
+		.btn-reset { background-color: #9E9E9E; color: white; }
+		.btn-reset:hover { background-color: #757575; }
+		
+		/* 테이블 스타일 */
+		.table-section { margin-top: 30px; }
+		
+		.table-section h2 {
+			color: #333;
+			margin-bottom: 15px;
+		}
+		
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
+		
+		th {
+			background-color: #CD4275;
+			color: white;
+			padding: 12px;
+			text-align: left;
+			font-weight: bold;
+		}
+		
+		td {
+			padding: 10px;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		tr:hover { background-color: #f5f5f5; }
+		
+		/* 메시지 스타일 */
+		.message {
+			padding: 10px;
+			margin-bottom: 15px;
+			border-radius: 4px;
+			display: none;
+		}
+		
+		.message.success {
+			background-color: #d4edda;
+			color: #155724;
+			border: 1px solid #c3e6cb;
+		}
+		
+		.message.error {
+			background-color: #f8d7da;
+			color: #721c24;
+			border: 1px solid #f5c6cb;
+		}
+		
+		/* 빈 데이터 메시지 */
+		.no-data {
+			text-align: center;
+			padding: 20px;
+			color: #999;
+		}
+		</style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧑🏻‍🎓 학생 관리 시스템</h1>
+        
+        <!-- 메시지 표시 영역 -->
+        <div id="message" class="message"></div>
+        
+        <!-- 학생 추가/수정 폼 -->
+        <div class="form-section">
+            <h2 id="formTitle">✏️ 학생 추가</h2>
+            <form id="studentForm">
+                <!-- 수정 시 사용할 hidden input (ID 저장용) -->
+                <input type="hidden" id="studentId">
+                
+                <div class="form-group">
+                    <label for="name">이름 *</label>
+                    <input type="text" id="name" placeholder="예: 김철수" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">나이 *</label>
+                    <input type="number" id="age" placeholder="예: 20" min="1" max="100" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="major">전공 *</label>
+                    <input type="text" id="major" placeholder="예: 컴퓨터공학" required>
+                </div>
+                
+                <button type="submit" class="btn-add" id="submitBtn">추가하기</button>
+                <button type="button" class="btn-reset" onclick="resetForm()">초기화</button>
+            </form>
+        </div>
+        
+        <!-- 학생 검색 폼 -->
+        <div class="form-section">
+            <h2>🔍 학생 검색 (ID로 검색)</h2>
+            <div style="display: flex; gap: 10px;">
+                <input type="number" id="searchId" placeholder="학생 ID 입력" style="flex: 1;">
+                <button class="btn-search" onclick="searchStudent()" style="background: #CD4275;">검색</button>
+                <button class="btn-reset" onclick="loadAllStudents()">전체 보기</button>
+            </div>
+        </div>
+        
+        <!-- 학생 목록 테이블 -->
+        <div class="table-section">
+            <h2>👥 학생 목록</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>나이</th>
+                        <th>전공</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody id="studentList">
+                    <!-- JavaScript로 동적으로 추가됨 -->
+                    <tr>
+                        <td colspan="5" class="no-data">데이터를 불러오는 중...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+	<script>
+    window.onload = function () {
+        loadAllStudents();
+    };
+
+    // 학생 추가 수정 - 폼 제출시 호출됨
+    document.getElementById('studentForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // 입력값 가져오기
+        const id = document.getElementById('studentId').value;
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const major = document.getElementById('major').value;
+        
+        // 학생 객체 생성
+        const student = {
+            name: name,
+            age: parseInt(age),
+            major: major
+        };
+        
+        // ID가 있으면 수정, 없으면 추가
+        if (id) {
+            updateStudent(id, student);
+        } else {
+            addStudent(student);
+        }
+        
+        /* 
+            학생 추가 함수
+            fetch : 서버에 post 요청을 보냄
+            JSON.stringify : 자바스크립트 객체를 JSON 문자열로 변환
+        */
+        function addStudent(student) {
+            fetch('/student/api/insert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // JSON 형식으로 전송
+                },
+                body: JSON.stringify(student) // 객체를 JSON 문자열로 변환
+            })
+            .then(response => response.json()) // 응답을 JSON으로 파싱
+            .then(data => {
+                showMessage('학생 추가 완료! ID : ' + data.id, 'success');
+                resetForm(); // 폼 초기화
+                loadAllStudents();
+            })
+            .catch(error => {
+                showMessage('추가실패: ' + error, 'error');
+            });
+        }
+    });
+
+    // 전체 학생 조회 - get요청으로 서버에서 데이터 가져오기
+    function loadAllStudents() {
+        fetch('/student/api/list') // fetch함수를 이용해서 비동기식 GET을 호출
+        .then(response => response.json())
+        .then(data => {
+            displayStudents(data);
+        })
+        .catch(error => {
+            showMessage('조회실패 ' + error, 'error');
+        });
+    }
+    
+    // 폼 초기화
+    function resetForm() {
+        document.getElementById('studentForm').reset();
+        document.getElementById('studentId').value = '';
+        document.getElementById('formTitle').textContent = '✏️ 학생추가';
+        document.getElementById('submitBtn').textContent = '➕ 추가하기';
+        document.getElementById('submitBtn').className = 'btn-add';
+    }
+    
+    // 학생 목록 테이블에 표시
+    function displayStudents(students) {
+        const tbody = document.getElementById('studentList');
+        tbody.innerHTML = ''; // 기존 내용 삭제
+        
+        if (students.length === 0) {
+            tbody.innerHTML =
+                '<tr><td colspan="5" class="no-data">등록된 학생이 없습니다.</td></tr>';
+            return;
+        }
+        
+        students.forEach(student => {
+            const row = `
+                <tr>
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.major}</td>
+                    <td>
+                        <button class="btn-update"
+                            onclick="editStudent(${student.id}, '${student.name}', ${student.age}, '${student.major}')">수정</button>
+                        <button class="btn-delete"
+                            onclick="deleteStudent(${student.id})">삭제</button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // 메시지 표시
+    function showMessage(message, type) {
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = message;
+        messageDiv.className = 'message ' + type;
+        messageDiv.style.display = 'block';
+        
+        // 3초후 자동으로 숨김
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>

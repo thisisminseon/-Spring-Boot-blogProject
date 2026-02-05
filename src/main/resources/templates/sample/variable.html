@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>선택변수</title>
+</head>
+<body>
+<!-- 선택 변수 표현식 -->
+<!-- th:object 로 객체 선택 후 사용 방법 -->
+	<div th:object="${user}">
+		<p th:text="*{name}">이름</p>
+		<p th:text="*{age}">나이</p>
+		<p th:text="*{role}">권한</p>
+	</div>
+	<!-- 위 코드 == 아래 코드 -->
+	<div>
+		<p th:text="${user.name}">이름</p>
+		<p th:text="${user.age}">나이</p>
+		<p th:text="${user.role}">권한</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 
+        th:replace="fragments/layout :: common-head"
+        - fragments/layout.html 파일에서
+        - common-head 조각을 찾아서
+        - 현재 <head> 태그를 통째로 대체
+    -->
+    <th:block th:replace="~{sample/fragment/layout :: common-head}"></th:block>
+    
+    <title>홈 - MyWebsite</title>
+    
+    <!-- 페이지별 추가 CSS -->
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        th:insert="fragments/header :: header"
+        - fragments/header.html 파일에서
+        - header 조각을 찾아서
+        - 현재 위치에 **삽입**
+        
+        th:replace vs th:insert
+        - replace: 태그를 통째로 대체
+        - insert: 태그 안에 삽입
+    -->
+    <div th:insert="~{sample/fragment/header :: header}"></div>
+    <!-- 렌더링 후: <div><header>...</header></div> -->
+    
+    
+    <!-- 메인 컨텐츠 -->
+    <main>
+        <!-- Hero 섹션 -->
+        <div class="hero">
+            <h1>환영합니다!</h1>
+            <p>혁신적인 서비스를 경험하세요</p>
+            <button style="padding: 1rem 2rem; font-size: 1rem; background: white; color: #667eea; border: none; border-radius: 5px; cursor: pointer;">
+                시작하기
+            </button>
+        </div>
+        
+        <!-- 컨텐츠 섹션 -->
+        <div class="content">
+            <h2>주요 기능</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem;">
+                <!-- 기능 1 -->
+                <div style="padding: 2rem; background: #f9f9f9; border-radius: 8px;">
+                    <h3>빠른 속도</h3>
+                    <p>최적화된 성능으로 빠르게 작동합니다</p>
+                </div>
+                
+                <!-- 기능 2 -->
+                <div style="padding: 2rem; background: #f9f9f9; border-radius: 8px;">
+                    <h3>안전한 보안</h3>
+                    <p>최신 보안 기술로 데이터를 보호합니다</p>
+                </div>
+                
+                <!-- 기능 3 -->
+                <div style="padding: 2rem; background: #f9f9f9; border-radius: 8px;">
+                    <h3>24/7 지원</h3>
+                    <p>언제든지 고객센터를 이용하세요</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    
+    <!-- 
+        th:replace="fragments/footer :: footer"
+        - fragments/footer.html 파일에서
+        - footer 조각을 찾아서
+        - 현재 태그를 대체
+    -->
+    <th:block th:replace="~{sample/fragment/footer :: footer}"></th:block>
+    
+    
+    <!-- 공통 JavaScript -->
+    <th:block th:replace="~{sample/fragment/layout :: common-scripts}"></th:block>
+    
+    <!-- 페이지별 추가 스크립트 -->
+    <script>
+        console.log('index.html 로드됨!');
+        
+        // 페이지별 JavaScript 로직
+        document.querySelector('.hero button').addEventListener('click', function() {
+            alert('시작하기 버튼 클릭!');
+        });
+    </script>
+</body>
+</html>
