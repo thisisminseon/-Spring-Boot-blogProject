@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학생 관리 시스템</title>
-		 <style>
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>학생 관리 시스템</title>
+	<style>
 		* {
 			margin: 0;
 			padding: 0;
@@ -27,19 +27,8 @@
 		}
 		
 		h1 {
-		    text-align: center;
-		    margin-bottom: 30px;
-			background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-		    background-size: 400% 400%;
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			animation: rainbowGlow 1s linear infinite;
-		}
-		
-		@keyframes rainbowGlow {
-			0% { background-position: 0% 50%; }
-			50% { background-position: 100% 50%; }
-			100% { background-position: 0% 50%; }
+			text-align: center;
+			margin-bottom: 30px;
 		}
 		
 		/* 폼 영역 스타일 */
@@ -51,7 +40,7 @@
 		}
 		
 		.form-section h2 {
-			color: #CD4275;
+			color: #DB7A9D;
 			margin-bottom: 15px;
 			font-size: 20px;
 		}
@@ -77,7 +66,7 @@
 		
 		input[type="text"]:focus, input[type="number"]:focus {
 			outline: none;
-			border-color: #CD4275;
+			border-color: #DB7A9D;
 		}
 		
 		/* 버튼 스타일 */
@@ -92,23 +81,59 @@
 			transition: all 0.3s;
 		}
 		
-		.btn-add { background-color: #CD4275; color: white; }
-		.btn-add:hover { background-color: #BE2457	; }
+		.btn-add {
+			background-color:#DB7A9D;
+			color: white;
+		}
 		
-		.btn-search { background-color: #2196F3; color: white; }
-		.btn-search:hover { background-color: #0b7dda; }
+		.btn-add:hover {
+			background-color:#DB7A9D;
+		}
 		
-		.btn-update { background-color: #ff9800; color: white; padding: 5px 10px; font-size: 12px; }
-		.btn-update:hover { background-color: #e68900; }
+		.btn-search {
+			background-color: #2196F3;
+			color: white;
+		}
 		
-		.btn-delete { background-color: #f44336; color: white; padding: 5px 10px; font-size: 12px; }
-		.btn-delete:hover { background-color: #da190b; }
+		.btn-search:hover {
+			background-color: #0b7dda;
+		}
 		
-		.btn-reset { background-color: #9E9E9E; color: white; }
-		.btn-reset:hover { background-color: #757575; }
+		.btn-update {
+			background-color: #ff9800;
+			color: white;
+			padding: 5px 10px;
+			font-size: 12px;
+		}
+		
+		.btn-update:hover {
+			background-color: #e68900;
+		}
+		
+		.btn-delete {
+			background-color: #f44336;
+			color: white;
+			padding: 5px 10px;
+			font-size: 12px;
+		}
+		
+		.btn-delete:hover {
+			background-color: #da190b;
+		}
+		
+		.btn-reset {
+			background-color: #9E9E9E;
+			color: white;
+		}
+		
+		.btn-reset:hover {
+			background-color: #757575;
+		}
 		
 		/* 테이블 스타일 */
-		.table-section { margin-top: 30px; }
+		.table-section {
+			margin-top: 30px;
+		}
 		
 		.table-section h2 {
 			color: #333;
@@ -122,7 +147,7 @@
 		}
 		
 		th {
-			background-color: #CD4275;
+			background-color:#DB7A9D;
 			color: white;
 			padding: 12px;
 			text-align: left;
@@ -134,7 +159,9 @@
 			border-bottom: 1px solid #ddd;
 		}
 		
-		tr:hover { background-color: #f5f5f5; }
+		tr:hover {
+			background-color: #f5f5f5;
+		}
 		
 		/* 메시지 스타일 */
 		.message {
@@ -161,193 +188,371 @@
 			text-align: center;
 			padding: 20px;
 			color: #999;
-		}
-		</style>
-</head>
-<body>
-    <div class="container">
-        <h1>🧑🏻‍🎓 학생 관리 시스템</h1>
-        
-        <!-- 메시지 표시 영역 -->
-        <div id="message" class="message"></div>
-        
-        <!-- 학생 추가/수정 폼 -->
-        <div class="form-section">
-            <h2 id="formTitle">✏️ 학생 추가</h2>
-            <form id="studentForm">
-                <!-- 수정 시 사용할 hidden input (ID 저장용) -->
-                <input type="hidden" id="studentId">
-                
-                <div class="form-group">
-                    <label for="name">이름 *</label>
-                    <input type="text" id="name" placeholder="예: 김철수" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="age">나이 *</label>
-                    <input type="number" id="age" placeholder="예: 20" min="1" max="100" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="major">전공 *</label>
-                    <input type="text" id="major" placeholder="예: 컴퓨터공학" required>
-                </div>
-                
-                <button type="submit" class="btn-add" id="submitBtn">추가하기</button>
-                <button type="button" class="btn-reset" onclick="resetForm()">초기화</button>
-            </form>
-        </div>
-        
-        <!-- 학생 검색 폼 -->
-        <div class="form-section">
-            <h2>🔍 학생 검색 (ID로 검색)</h2>
-            <div style="display: flex; gap: 10px;">
-                <input type="number" id="searchId" placeholder="학생 ID 입력" style="flex: 1;">
-                <button class="btn-search" onclick="searchStudent()" style="background: #CD4275;">검색</button>
-                <button class="btn-reset" onclick="loadAllStudents()">전체 보기</button>
-            </div>
-        </div>
-        
-        <!-- 학생 목록 테이블 -->
-        <div class="table-section">
-            <h2>👥 학생 목록</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>이름</th>
-                        <th>나이</th>
-                        <th>전공</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody id="studentList">
-                    <!-- JavaScript로 동적으로 추가됨 -->
-                    <tr>
-                        <td colspan="5" class="no-data">데이터를 불러오는 중...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-	<script>
-    window.onload = function () {
-        loadAllStudents();
-    };
+			}
+	</style>
+	</head>
+	
+	<body>
+		<div class="container">
+			<h1>📚 학생 관리 시스템</h1>
+	
+			<div id="message" class="message"></div>
+	
+			<!-- 학생 추가/수정 폼 -->
+			<div class="form-section">
+				<h2 id="formTitle">✏️ 학생 추가</h2>
+				<form id="studentForm">
+					<input type="hidden" id="studentId">
+	
+					<div class="form-group">
+						<label>이름</label> <input type="text" id="name" placeholder="예: 김철수" required>
+					</div>
+	
+					<div class="form-group">
+						<label>나이</label> <input type="number" id="age" placeholder="예: 20" min="1" max="100" required>
+					</div>
+	
+					<div class="form-group">
+						<label>전공</label> <input type="text" id="major" placeholder="예: 컴퓨터공학" required>
+					</div>
+	
+					<div class="form-group">
+						<label>첨부파일</label> <input type="file" id="file">
+						<div id="existingFile"></div>
+					</div>
+	
+					<button type="submit" id="submitBtn" class="btn-add">추가하기</button>
+					<button type="button" class="btn-reset" onclick="resetForm()">초기화</button>
+				</form>
+			</div>
+	
+			<!-- 학생 검색 -->
+			<div class="form-section">
+				<h2>🔍 학생 검색 (ID)</h2>
+				<div style="display: flex; gap: 10px;">
+					<input type="number" id="searchId" placeholder="학생 ID"
+						style="flex: 1;">
+					<button class="btn-search" onclick="searchStudent()" style="background: #DB7A9D;">검색</button>
+					<button class="btn-reset" onclick="loadAllStudents()">전체</button>
+				</div>
+			</div>
+	
+			<!-- 학생 목록 테이블 -->
+		<div class="table-section">
+			<h2>👥 학생 목록</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>이름</th>
+						<th>나이</th>
+						<th>전공</th>
+						<th>첨부파일</th>
+						<th>관리</th>
+					</tr>
+				</thead>
+				<tbody id="studentList">
+					<tr>
+						<td colspan="6" class="no-data">데이터를 불러오는 중...</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-    // 학생 추가 수정 - 폼 제출시 호출됨
-    document.getElementById('studentForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // 입력값 가져오기
-        const id = document.getElementById('studentId').value;
-        const name = document.getElementById('name').value;
-        const age = document.getElementById('age').value;
-        const major = document.getElementById('major').value;
-        
-        // 학생 객체 생성
-        const student = {
-            name: name,
-            age: parseInt(age),
-            major: major
-        };
-        
-        // ID가 있으면 수정, 없으면 추가
-        if (id) {
-            updateStudent(id, student);
-        } else {
-            addStudent(student);
-        }
-        
-        /* 
-            학생 추가 함수
-            fetch : 서버에 post 요청을 보냄
-            JSON.stringify : 자바스크립트 객체를 JSON 문자열로 변환
-        */
-        function addStudent(student) {
-            fetch('/student/api/insert', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' // JSON 형식으로 전송
-                },
-                body: JSON.stringify(student) // 객체를 JSON 문자열로 변환
-            })
-            .then(response => response.json()) // 응답을 JSON으로 파싱
-            .then(data => {
-                showMessage('학생 추가 완료! ID : ' + data.id, 'success');
-                resetForm(); // 폼 초기화
-                loadAllStudents();
-            })
-            .catch(error => {
-                showMessage('추가실패: ' + error, 'error');
-            });
-        }
-    });
-
-    // 전체 학생 조회 - get요청으로 서버에서 데이터 가져오기
-    function loadAllStudents() {
-        fetch('/student/api/list') // fetch함수를 이용해서 비동기식 GET을 호출
-        .then(response => response.json())
-        .then(data => {
-            displayStudents(data);
-        })
-        .catch(error => {
-            showMessage('조회실패 ' + error, 'error');
-        });
-    }
-    
-    // 폼 초기화
-    function resetForm() {
-        document.getElementById('studentForm').reset();
-        document.getElementById('studentId').value = '';
-        document.getElementById('formTitle').textContent = '✏️ 학생추가';
-        document.getElementById('submitBtn').textContent = '➕ 추가하기';
-        document.getElementById('submitBtn').className = 'btn-add';
-    }
-    
-    // 학생 목록 테이블에 표시
-    function displayStudents(students) {
-        const tbody = document.getElementById('studentList');
-        tbody.innerHTML = ''; // 기존 내용 삭제
-        
-        if (students.length === 0) {
-            tbody.innerHTML =
-                '<tr><td colspan="5" class="no-data">등록된 학생이 없습니다.</td></tr>';
-            return;
-        }
-        
-        students.forEach(student => {
-            const row = `
-                <tr>
-                    <td>${student.id}</td>
-                    <td>${student.name}</td>
-                    <td>${student.age}</td>
-                    <td>${student.major}</td>
-                    <td>
-                        <button class="btn-update"
-                            onclick="editStudent(${student.id}, '${student.name}', ${student.age}, '${student.major}')">수정</button>
-                        <button class="btn-delete"
-                            onclick="deleteStudent(${student.id})">삭제</button>
-                    </td>
-                </tr>
-            `;
-            tbody.innerHTML += row;
-        });
-    }
-
-    // 메시지 표시
-    function showMessage(message, type) {
-        const messageDiv = document.getElementById('message');
-        messageDiv.textContent = message;
-        messageDiv.className = 'message ' + type;
-        messageDiv.style.display = 'block';
-        
-        // 3초후 자동으로 숨김
-        setTimeout(() => {
-            messageDiv.style.display = 'none';
-        }, 3000);
-    }
-</script>
-
-</body>
+		<script>
+		    window.onload = () => {
+		        loadAllStudents();
+		    };
+		
+		    // 학생 추가 / 수정
+		    document.getElementById('studentForm').addEventListener('submit', async (e) => {
+		        e.preventDefault();
+		
+		        const id = document.getElementById('studentId').value;
+		        const name = document.getElementById('name').value;
+		        const age =  parseInt(document.getElementById('age').value);
+		        const major =  document.getElementById('major').value;
+		        const fileInput = document.getElementById('file');
+		        const file = fileInput.files[0]; //첨부파일 선택 파일
+		        
+		        /* const student = {
+		              
+		        }; */
+		        
+		        const formData = new FormData(); 
+		        formData.append('name', name);
+		        formData.append('age', age);
+		        formData.append('major', major);
+		        
+		        if(file) {
+		           formData.append('file', file);
+		        }
+		        
+		        if (id) {
+		           //수정
+		            //await updateStudent(id, student);
+		           await updateStudentWithFile(id, formData);
+		        } else {
+		           //추가
+		            //await addStudent(student);
+		           await addStudentWithFile(formData);
+		        }
+		    });
+		
+		 // 학생 추가
+		    async function addStudentWithFile(formData) {
+		        try {
+		            const response = await fetch('/student/api/file/insert', {
+		                method: 'POST',
+		                body: formData //Content-type 은 formData가 자동 설정을 한다
+		            });
+		            const data = await response.json();
+		            showMessage('학생 추가 완료! ID: ' + data.id, 'success');
+		            resetForm();
+		            loadAllStudents();
+		        } catch (error) {
+		            showMessage('추가 실패: ' + error, 'error');
+		        }
+		    }
+		 
+		 
+		    // 학생 추가
+		    async function addStudent(student) {
+		        try {
+		            const response = await fetch('/student/api/file/nsert', {
+		                method: 'POST',
+		                headers: { 'Content-Type': 'application/json' },
+		                body: JSON.stringify(student)
+		            });
+		
+		            const data = await response.json();
+		            showMessage('학생 추가 완료! ID: ' + data.id, 'success');
+		            resetForm();
+		            loadAllStudents();
+		        } catch (error) {
+		            showMessage('추가 실패: ' + error, 'error');
+		        }
+		    }
+		
+		    // 전체 학생 조회
+		    async function loadAllStudents() {
+		        try {
+		            const response = await fetch('/student/api/list');
+		            const data = await response.json();
+		            displayStudents(data);
+		        } catch (error) {
+		            showMessage('조회 실패: ' + error, 'error');
+		        }
+		    }
+		
+		    // 특정 학생 조회
+		    async function searchStudent() {
+		        const id = document.getElementById("searchId").value;
+		        if (!id) {
+		            alert("학생 id 입력");
+		            return;
+		        }
+		
+		        try {
+		            const response = await fetch('/student/api/' + id);
+		            if (!response.ok) {
+		                throw new Error("학생을 찾을 수 없어요");
+		            }
+		            const data = await response.json();
+		            displayStudents([data]);
+		            showMessage(`ID ${id}번 학생을 찾았습니다`, 'success');
+		        } catch (error) {
+		            showMessage(error.message, 'error');
+		        }
+		    }
+		
+		    // 수정 버튼 클릭
+		    function editStudent(id, name, age, major,fileName) {
+		        document.getElementById('studentId').value = id;
+		        document.getElementById('name').value = name;
+		        document.getElementById('age').value = age;
+		        document.getElementById('major').value = major;
+		        
+		        //기존 파일명 표시
+		        const existingFile = document.getElementById('existingFile');
+		        
+		        if(fileName) {
+		        	existingFile.innerHTML =
+		        	    '<span style="font-size:12px;color:#666;">기존 파일 : <strong>'
+		        	    + fileName +
+		        	    '</strong> (새 파일 선택 시 교체됨)</span>';
+		        }else{
+		           existingFile.innerHTML='';
+		        }
+		
+		        document.getElementById('formTitle').textContent = `✏️ 학생 수정 (ID: ${id})`;
+		        document.getElementById('submitBtn').textContent = '수정하기';
+		        document.getElementById('submitBtn').className = 'btn-update';
+		
+		        window.scrollTo({ top: 0, behavior: 'smooth' });
+		    }
+		
+		    // 실제 수정 처리
+		    async function updateStudentWithFile(id, formData) {
+		        try {
+		            const response = await fetch('/student/api/file/' + id, {
+		                method: 'PUT',
+		                body: formData
+		            });
+		
+		           if(!response.ok) {
+		              throw new Error('서버 오류');
+		           }
+		           
+		            showMessage('학생정보 수정 완료', 'success');
+		            resetForm();
+		            loadAllStudents();
+		        } catch (error) {
+		            showMessage('수정 실패: ' + error, 'error');
+		        }
+		    }
+		    
+		    async function updateStudent(id, student) {
+		        try {
+		            const response = await fetch('/student/api/' + id, {
+		                method: 'PUT',
+		                headers: { 'Content-Type': 'application/json' },
+		                body: JSON.stringify(student)
+		            });
+		
+		            await response.json();
+		            showMessage('학생정보 수정 완료', 'success');
+		            resetForm();
+		            loadAllStudents();
+		        } catch (error) {
+		            showMessage('수정 실패: ' + error, 'error');
+		        }
+		    }
+		
+		    // 삭제
+		    async function deleteStudent(id) {
+		        if (!confirm('정말 삭제??')) return;
+		
+		        try {
+		            await fetch('/student/api/file' + id, { 
+		               method: 'DELETE' 
+		            });
+		            
+		            if(!response.ok) {
+		               throw new Error('서버 오류');
+		            }
+		            
+		            showMessage('삭제 완료', 'success');
+		            loadAllStudents();
+		        } catch (error) {
+		            showMessage('삭제 실패: ' + error, 'error');
+		        }
+		    }
+		
+		    // 폼 초기화
+		    function resetForm() {
+		        document.getElementById('studentForm').reset();
+		        document.getElementById('studentId').value = '';
+		        document.getElementById('formTitle').textContent = '✏ 학생 추가';
+		        document.getElementById('submitBtn').textContent = '추가하기';
+		        document.getElementById('submitBtn').className = 'btn-add';
+		    }
+		
+		    
+		 // 이미지 파일인지 확인
+		    function isImageFile(fileName) {
+		        if (!fileName) return false;
+		        return /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
+		    }
+		 
+		    
+		    // 학생 목록 출력
+		    function displayStudents(students) {
+		        const tbody = document.getElementById('studentList');
+		        tbody.innerHTML = '';
+		
+		        if (students.length === 0) {
+		            tbody.innerHTML = '<tr><td colspan="5">등록된 학생이 없다</td></tr>';
+		            return;
+		        }
+		
+		        students.forEach(student => {
+		           //파일 정보 표시
+		           let fileCell = '';
+		           if (student.fileName) {
+		              const fileSize = formatBytes(student.fileSize);
+		              
+		              
+		              let preview = '';
+		               if (isImageFile(student.fileName)) {
+		                   preview = `
+		                       <img src="/student/file/image/${student.id}"
+		                            style="width:80px; height:auto; display:block; margin-bottom:5px;">
+		                   `;
+		               }
+		               
+		              
+		              fileCell = `
+		                 ${preview}
+		                       <div>
+		                          ${student.fileName}
+		                          <br>
+		                          <span class="badge-file">${fileSize}</span>
+		                          <button class="btn-download" onclick="downloadFile(${student.id})">다운로드</button>
+		                       </div>
+		                       `;
+		           } else {
+		              fileCell = '<span class="badge-none">파일 없음</span>';
+		           }
+		            tbody.innerHTML += `
+		                <tr>
+		                    <td>${student.id}</td>
+		                    <td>${student.name}</td>
+		                    <td>${student.age}</td>
+		                    <td>${student.major}</td>
+		                    <td>${fileCell}</td>
+		                    <td>
+		                        <button class="btn-update"
+		                            onclick="editStudent(${student.id}, '${student.name}', ${student.age}, '${student.major}','${student.fileName}')">
+		                            수정
+		                        </button>
+		                        <button class="btn-delete"
+		                            onclick="deleteStudent(${student.id})">
+		                            삭제
+		                        </button>
+		                    </td>
+		                </tr>
+		            `;
+		        });
+		    }
+		
+		    
+		    //파일 크기 포멧팅
+		    function formatBytes(bytes) {
+		       if (!bytes) return '0B'; //0 또는 null 이면
+		       const k = 1024; //1kb = 1024B
+		       const sizes = ['B','KB','MB','GB']; //단위를 배열에 저장
+		       const i = Math.floor(Math.log(bytes) / Math.log(k)); //Math.floor 소수점을 버림. 단위 초과 방지
+		       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' '+sizes[i];
+		       //Math.pow(k, i) => bytes / (1024^i)
+		       //toFixed(2) 소수점 2자리로 자르기
+		       //parseFloat()  숫자로 다시 변환
+		       //sizes[i] 단위 붙여서 반환
+		       //0처리->단위결정->크기환산->소수점정리->단위 붙여서 반환 과정으로 처리하라 는 뜻
+		    }
+		    
+		    
+		    // 메시지 표시
+		    function showMessage(message, type) {
+		        const messageDiv = document.getElementById('message');
+		        messageDiv.textContent = message;
+		        messageDiv.className = 'message ' + type;
+		        messageDiv.style.display = 'block';
+		
+		        setTimeout(() => {
+		            messageDiv.style.display = 'none';
+		        }, 3000);
+		    }
+		</script>
+	</body>
 </html>

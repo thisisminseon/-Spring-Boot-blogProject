@@ -15,4 +15,9 @@ public class Student {
 	private Integer age;
 	private String major;
 	
+	// 추가된 필드 (26.02.06)
+	private String filePath;
+	private String fileName;
+	private Long fileSize;
+	
 }

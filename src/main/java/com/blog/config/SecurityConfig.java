@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /* 
@@ -16,15 +18,32 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	// 비밀번호 암호화 방식 설정
+	// Bcrypt : 단방향 해시 암호화 (복호화 불가)
+	@Bean
+	public PasswordEncoder pssEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Bean
 	public SecurityFilterChain fileterChain(HttpSecurity http) throws Exception {
 
 		http
-		.csrf(csrf -> csrf.disable()) // Turn .csrf Off
-		.authorizeHttpRequests(auth -> auth // auth is 'Parameter'
-				.anyRequest().permitAll() // Permitting All url
-				);
+			.csrf(csrf -> csrf.disable()) // Turn .csrf Off
+			.authorizeHttpRequests(auth -> auth // auth is 'Parameter'
+					// 로그인 없이 누구든지 접근 가능
+					.requestMatchers(
+							"/",
+							"/login",
+							"/register",
+							"/css/**",
+							"/js/**",
+							"/images/**"
+					).permitAll()
+					.anyRequest().permitAll() // Permitting All url
+			);
 
 		return http.build();
 	}
+
 }

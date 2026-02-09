@@ -2,6 +2,8 @@ package com.blog.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
 import com.blog.domain.Student;
 import com.blog.service.StudentService;
@@ -73,8 +73,8 @@ public class StudentController {
 	 */
 	
 	@GetMapping("/{id}")
-	public Student getStudent(@PathVariable("id") Integer Id) {
-		return studentService.selectById(Id);
+	public Student getStudent(@PathVariable("id") Integer id) {
+		return studentService.getStudentById(id);
 	}
 	
 	
@@ -85,7 +85,8 @@ public class StudentController {
 	 */
 	
 	@PutMapping("/{id}")
-	public String updateStudent(@PathVariable("id") Integer id,
+	public String updateStudent(
+			@PathVariable("id") Integer id,
 			@RequestBody Student student) {
 	
 		student.setId(id);
@@ -100,8 +101,8 @@ public class StudentController {
 	 */
 	
 	@DeleteMapping("/{id}")
-	public String deleteStudent(@PathVariable("id") Integer Id) {
-		studentService.removeStudent(Id);
+	public String deleteStudent(@PathVariable("id") Integer id) {
+		studentService.removeStudent(id);
 		return "학생이 삭제되었습니다";
 	}
 	
